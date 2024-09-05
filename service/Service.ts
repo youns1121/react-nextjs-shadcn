@@ -1,145 +1,84 @@
-
 interface HTTPInstance {
-    get<T>(
-        url: string,
-        config?: RequestInit,
-    ): Promise<T>;
-    delete<T>(
-        url: string,
-        config?: RequestInit,
-    ): Promise<T>;
-    head<T>(
-        url: string,
-        config?: RequestInit,
-    ): Promise<T>;
-    options<T>(
-        url: string,
-        config?: RequestInit,
-    ): Promise<T>;
-    post<T>(
-        url: string,
-        data?: unknown,
-        config?: RequestInit,
-    ): Promise<T>;
-    put<T>(
-        url: string,
-        data?: unknown,
-        config?: RequestInit,
-    ): Promise<T>;
-    patch<T>(
-        url: string,
-        data?: unknown,
-        config?: RequestInit,
-    ): Promise<T>;
+    get<T>(url: string, config?: RequestInit): Promise<T>;
+    delete<T>(url: string, config?: RequestInit): Promise<T>;
+    head<T>(url: string, config?: RequestInit): Promise<T>;
+    options<T>(url: string, config?: RequestInit): Promise<T>;
+    post<T>(url: string, data?: unknown, config?: RequestInit): Promise<T>;
+    put<T>(url: string, data?: unknown, config?: RequestInit): Promise<T>;
+    patch<T>(url: string, data?: unknown, config?: RequestInit): Promise<T>;
 }
 
-class Service {
-    public http: HTTPInstance;
+const baseURL = `${process.env.NEXT_PUBLIC_BASE_URL}`;
+const headers: Record<string, string> = {
+    csrf: 'token',
+    Referer: baseURL,
+};
 
-    private baseURL: string;
+const request = async <T = unknown>(
+    method: string,
+    url: string,
+    data?: unknown,
+    config?: RequestInit
+): Promise<T> => {
+    try {
+        const response = await fetch(baseURL + url, {
+            method,
+            headers: {
+                ...headers,
+                'Content-Type': 'application/json',
+                ...config?.headers,
+            },
+            credentials: 'include',
+            body: data ? JSON.stringify(data) : undefined,
+            ...config,
+        });
 
-    private headers: Record<string, string>;
-
-    constructor() {
-        this.baseURL = `${process.env.NEXT_PUBLIC_BASE_URL}`;
-        this.headers = {
-            csrf: 'token',
-            Referer: this.baseURL,
-        };
-
-        this.http = {
-            get: this.get.bind(this),
-            delete: this.delete.bind(this),
-            head: this.head.bind(this),
-            options: this.options.bind(this),
-            post: this.post.bind(this),
-            put: this.put.bind(this),
-            patch: this.patch.bind(this),
-        };
-    }
-
-    private async request<T = unknown>(
-        method: string,
-        url: string,
-        data?: unknown,
-        config?: RequestInit,
-    ): Promise<T> {
-        try {
-            const response = await fetch(this.baseURL + url, {
-                method,
-                headers: {
-                    ...this.headers,
-                    'Content-Type': 'application/json',
-                    ...config?.headers,
-                },
-                credentials: 'include',
-                body: data ? JSON.stringify(data) : undefined,
-                ...config,
-            });
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const responseData: T = await response.json();
-            return responseData;
-        } catch (error) {
-            console.error('Error:', error);
-            throw error;
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-    }
 
-    private get<T>(
-        url: string,
-        config?: RequestInit,
-    ): Promise<T> {
-        return this.request<T>('GET', url, undefined, config);
+        const responseData: T = await response.json();
+        return responseData;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
     }
+};
 
-    private delete<T>(
-        url: string,
-        config?: RequestInit,
-    ): Promise<T> {
-        return this.request<T>('DELETE', url, undefined, config);
-    }
+const get = <T>(url: string, config?: RequestInit): Promise<T> => {
+    return request<T>('GET', url, undefined, config);
+};
 
-    private head<T>(
-        url: string,
-        config?: RequestInit,
-    ): Promise<T> {
-        return this.request<T>('HEAD', url, undefined, config);
-    }
+const del = <T>(url: string, config?: RequestInit): Promise<T> => {
+    return request<T>('DELETE', url, undefined, config);
+};
 
-    private options<T>(
-        url: string,
-        config?: RequestInit,
-    ): Promise<T> {
-        return this.request<T>('OPTIONS', url, undefined, config);
-    }
+const head = <T>(url: string, config?: RequestInit): Promise<T> => {
+    return request<T>('HEAD', url, undefined, config);
+};
 
-    private post<T>(
-        url: string,
-        data?: unknown,
-        config?: RequestInit,
-    ): Promise<T> {
-        return this.request<T>('POST', url, data, config);
-    }
+const options = <T>(url: string, config?: RequestInit): Promise<T> => {
+    return request<T>('OPTIONS', url, undefined, config);
+};
 
-    private put<T>(
-        url: string,
-        data?: unknown,
-        config?: RequestInit,
-    ): Promise<T> {
-        return this.request<T>('PUT', url, data, config);
-    }
+const post = <T>(url: string, data?: unknown, config?: RequestInit): Promise<T> => {
+    return request<T>('POST', url, data, config);
+};
 
-    private patch<T>(
-        url: string,
-        data?: unknown,
-        config?: RequestInit,
-    ): Promise<T> {
-        return this.request<T>('PATCH', url, data, config);
-    }
-}
+const put = <T>(url: string, data?: unknown, config?: RequestInit): Promise<T> => {
+    return request<T>('PUT', url, data, config);
+};
 
-export default Service;
+const patch = <T>(url: string, data?: unknown, config?: RequestInit): Promise<T> => {
+    return request<T>('PATCH', url, data, config);
+};
+
+export const http: HTTPInstance = {
+    get,
+    delete: del,
+    head,
+    options,
+    post,
+    put,
+    patch,
+};

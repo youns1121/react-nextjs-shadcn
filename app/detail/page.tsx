@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -16,10 +18,12 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination"
 
+
 const Detail = () => {
 
     return (
         <div className="flex w-full flex-col gap-6">
+
             <Card
                 className="overflow-hidden w-[1000px] h-[800px] self-center"
                 x-chunk="dashboard-05-chunk-4"
@@ -28,15 +32,8 @@ const Detail = () => {
                     <div className="grid gap-0.5">
                         <CardTitle className="group flex items-center gap-2 text-lg">
                             Order Oe31b70H
-                            <Button
-                                className="h-6 w-6 opacity-0 transition-opacity group-hover:opacity-100"
-                                size="icon"
-                                variant="outline"
-                            >
-                                <span className="sr-only">
-                                    Copy Order ID
-                                </span>
-                            </Button>
+                            {/* <Button type="button" onClick={() => signIn('google')} >Login</Button> */}
+
                         </CardTitle>
                         <CardDescription>
                             Date: November 23, 2023

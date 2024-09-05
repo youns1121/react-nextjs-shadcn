@@ -249,7 +249,7 @@ const Tables = () => {
         getFacetedRowModel: getFacetedRowModel(),
         getFacetedUniqueValues: getFacetedUniqueValues(),
     });
-    
+
     const containerWidth = typeof window !== "undefined" ? window.innerWidth : 1;
     const leftRatio = (maxWidth / containerWidth) * 100;
     const rightRatio = ((containerWidth - maxWidth) / containerWidth) * 100;
@@ -267,9 +267,8 @@ const Tables = () => {
                         <div className="h-[700px] px-8 pb-8 flex-col justify-start items-start gap-2.5 flex">
 
                             <div className="self-stretch justify-between items-center inline-flex">
-                                <Button className="w-[94px] px-3 bg-zinc-900 rounded-md justify-center items-center gap-2.5 flex">
-                                    <div className="text-neutral-50 text-sm font-medium font-['Inter'] leading-tight">Add Order</div>
-                                </Button>
+                                {/* <Button type="button" onClick={() => signIn('google')} >Login</Button> */}
+
                                 <DataTableSearch table={table} globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
                             </div>
                             <div className="self-stretch justify-between items-center inline-flex">

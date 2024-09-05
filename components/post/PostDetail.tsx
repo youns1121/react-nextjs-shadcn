@@ -90,11 +90,9 @@ const PostDetail = ({ isOpen, postDetail, setIsOpen, children }: PostDetailProps
         document.addEventListener('mouseup', handleMouseUp);
     };
 
-
-
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         const body = {
-            id: updatePostDetail?.id,
+            id: postDetail?.id,
             password: values.password
         }
 

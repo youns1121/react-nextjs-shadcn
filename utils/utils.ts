@@ -45,15 +45,29 @@ export const isEqual = (value: unknown, other: unknown): boolean => {
     return value === other;
 };
 
+export const isToday = (dateString: string) => {
+    const dateObject = new Date(dateString);
+    const today = new Date();
+    return dateObject.toDateString() === today.toDateString();
+}
+
 export const convertToDate = (dateString: string) => {
     if (!dateString) return;
     const dateObject = new Date(dateString);
+
+    const today = new Date();
+    const isToday = dateObject.toDateString() === today.toDateString();
+
+    const hours = String(dateObject.getHours()).padStart(2, '0');
+    const minutes = String(dateObject.getMinutes()).padStart(2, '0');
+
+    if (isToday) {
+        return `${hours}:${minutes}`;
+    }
+
     const year = dateObject.getFullYear();
     const month = String(dateObject.getMonth() + 1).padStart(2, '0');
     const day = String(dateObject.getDate()).padStart(2, '0');
-    const hours = String(dateObject.getHours()).padStart(2, '0');
-    const minutes = String(dateObject.getMinutes()).padStart(2, '0');
-    const seconds = String(dateObject.getSeconds()).padStart(2, '0');
 
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
 }

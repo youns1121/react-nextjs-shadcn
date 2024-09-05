@@ -1,59 +1,47 @@
-import Service from '@/service/Service';
+import { http } from '@/service/Service';
 import { Post, Comment } from '@/model/post';
 
-class PostService extends Service {
-    getPosts() {
-        return this.http.get<Post[]>(
-            `/api/posts`,
-        );
-    }
+const getPosts = (): Promise<Post[]> => {
+    return http.get<Post[]>('/api/posts');
+};
 
-    getPost(postId: string) {
-        return this.http.get<Post>(
-            `/api/posts/${postId}`,
-        );
-    }
+const getPost = (postId: string): Promise<Post> => {
+    return http.get<Post>(`/api/posts/${postId}`);
+};
 
-    getComments() {
-        return this.http.get<Comment[]>(
-            `/api/comments`,
-        );
-    }
+const getComments = (): Promise<Comment[]> => {
+    return http.get<Comment[]>('/api/comments');
+};
 
-    getPostComments(postId: string) {
-        return this.http.get<Comment[]>(
-            `/api/comments?postId=${postId}`,
-        );
-    }
+const getPostComments = async (postId: string): Promise<Comment[]> => {
+    
+    return http.get<Comment[]>(`/api/comments?postId=${postId}`);
+};
 
-    createPost(post: Post) {
-        return this.http.post<Post>(
-            `/api/posts`,
-            post,
-        );
-    }
+const createPost = (post: Post): Promise<Post> => {
+    return http.post<Post>('/api/posts', post);
+};
 
-    updatePost(post: Post) {
-        return this.http.put<Post>(
-            `/api/posts/${post.id}`,
-            post,
-        );
-    }
+const updatePost = (post: Post): Promise<Post> => {
+    return http.put<Post>(`/api/posts/${post.id}`, post);
+};
 
-    deletePost(post: Post) {
-        return this.http.put<Post>(
-            `/api/posts/delete/${post.id}`,
-            post,
-        );
-    }
+const deletePost = (post: Post): Promise<Post> => {
+    return http.put<Post>(`/api/posts/delete`, post);
+};
 
-    createComment(comment: Comment) {
-        return this.http.post<Comment>(
-            `/api/comments`,
-            comment,
-        );
-    }
-}
+const createComment = (comment: Comment): Promise<Comment> => {
+    return http.post<Comment>('/api/comments', comment);
+};
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default new PostService();
+export default {
+    getPosts,
+    getPost,
+    getComments,
+    getPostComments,
+    createPost,
+    updatePost,
+    deletePost,
+    createComment
+};

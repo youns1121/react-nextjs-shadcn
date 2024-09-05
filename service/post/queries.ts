@@ -1,4 +1,4 @@
-import { Post, Comment } from '@/model/post';
+import { Post } from '@/model/post';
 import PostService from '@/service/post/PostService';
 
 export const queryKeys = {
@@ -30,9 +30,6 @@ const queryOptions = {
     }),
     create: (post: Post) => ({
         mutationFn: () => PostService.createPost(post),
-    }),
-    createComment: async () => ({
-
     }),
 };
 

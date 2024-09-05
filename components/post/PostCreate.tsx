@@ -89,10 +89,10 @@ const PostCreate = () => {
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
     };
-
+    
     return (
         <>
-            <Button onClick={() => setIsOpen(true)}>Create</Button>
+            <Button type="button" onClick={() => setIsOpen(true)}>Create</Button>
             <Sheet modal={false} open={isOpen}>
                 <SheetContent className={`w-full flex`} style={{ maxWidth: `${rightRatio}%`, minWidth: "25%" }}>
                     <div
