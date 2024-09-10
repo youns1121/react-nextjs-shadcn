@@ -10,7 +10,6 @@ import { Textarea } from "../ui/textarea";
 import { useUpdatePost } from "@/service/post/usePostService";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/service/post/queries";
-import { hashPassword, comparePassword } from "@/lib/auth";
 
 const formSchema = z.object({
     title: z.string().min(2).max(50),

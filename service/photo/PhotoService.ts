@@ -1,27 +1,27 @@
-import Service from '@/service/Service';
+import { http } from '@/service/Service';
 import { Photo } from '@/model/photo';
 
-class PhotoService extends Service {
+class PhotoService {
     getPhotos() {
-        return this.http.get<Photo[]>(
+        return http.get<Photo[]>(
             `/photos`,
         );
     }
 
     getPhoto(photoId: number) {
-        return this.http.get<Photo>(
+        return http.get<Photo>(
             `/photos/${photoId}`,
         );
     }
 
     getComments(photoId: number) {
-        return this.http.get<Comment[]>(
+        return http.get<Comment[]>(
             `/photo/${photoId}/comments`,
         );
     }
 
     getComment({ photoId, commentId }: { photoId: number, commentId: number }) {
-        return this.http.get<Comment[]>(
+        return http.get<Comment[]>(
             `/photo/${photoId}/comments/${commentId}`,
         );
     }

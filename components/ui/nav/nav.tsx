@@ -34,20 +34,6 @@ const Nav = () => {
                             </NavigationMenuLink>
                         </Link>
                     </NavigationMenuItem>
-                    <NavigationMenuItem className="pr-2">
-                        <Link href="/detail" legacyBehavior passHref>
-                            <NavigationMenuLink>
-                                DETAIL
-                            </NavigationMenuLink>
-                        </Link>
-                    </NavigationMenuItem>
-                    <NavigationMenuItem className="pr-2">
-                        <Link href="/example" legacyBehavior passHref>
-                            <NavigationMenuLink>
-                                EXAMPLE
-                            </NavigationMenuLink>
-                        </Link>
-                    </NavigationMenuItem>
                 </NavigationMenuList>
 
             </NavigationMenu>

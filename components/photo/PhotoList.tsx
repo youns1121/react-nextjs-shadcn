@@ -7,7 +7,7 @@ export default function PhotoList() {
 
     return (
         <div>
-            {photos?.map((photo) => {
+            {photos?.map((photo: any) => {
                 return (
                     <PhotoCard {...photo} key={`${photo.albumId}-${photo.id}`}></PhotoCard>
                 )

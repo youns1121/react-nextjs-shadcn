@@ -22,8 +22,9 @@ import { Post } from "@/model/post";
 interface DataTableProps<TData, TValue = unknown> {
     table: reactTable<TData>
     columns: ColumnDef<TData, TValue>[]
-    setPostDetail: (value: Post | null) => void
-    setIsOpen?: (value: boolean) => void
+    setPostDetail: (value: any) => void    
+    setIsOpen?: (value: boolean) => void    
+
 }
 
 const DataTable = <TData, TValue>({ table, columns, setPostDetail, setIsOpen }: DataTableProps<TData, TValue>) => {

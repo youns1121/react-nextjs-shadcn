@@ -21,7 +21,8 @@ import {
     getFacetedUniqueValues,
     getFacetedRowModel,
     FilterFn,
-    createColumnHelper
+    createColumnHelper,
+    Table
 } from "@tanstack/react-table";
 
 import {
@@ -221,7 +222,7 @@ const Tables = () => {
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
     };
-    const table = useReactTable({
+    const table: Table<Delivery> = useReactTable({
         data: data,
         columns: columns,
         getCoreRowModel: getCoreRowModel(),
@@ -350,7 +351,7 @@ const Tables = () => {
                                     </Sheet>
                                 </div>
                             </div>
-                            <DataTable table={table} columns={columns} setOpenDetail={setOpenDetail} />
+                            <DataTable<Delivery, any> table={table} columns={columns} setPostDetail={setOpenDetail} />
                             <DataTablePagination table={table} />
 
                         </div>
